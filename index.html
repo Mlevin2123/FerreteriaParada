@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>FERRETERÍA PARADA — Catálogo Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===========================
+   CSS VARIABLES & RESET
+=========================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --yellow:       #F5C518;
+  --yellow-dark:  #D4A017;
+  --yellow-light: #FFF8DC;
+  --yellow-dim:   rgba(245,197,24,0.15);
+  --black:        #0D0D0D;
+  --dark:         #141414;
+  --card-bg:      #1C1C1C;
+  --border:       #2A2A2A;
+  --border-light: #333;
+  --text-primary: #F0F0F0;
+  --text-secondary:#A0A0A0;
+  --text-muted:   #666;
+  --success:      #22C55E;
+  --danger:       #EF4444;
+  --info:         #3B82F6;
+  --wa-green:     #25D366;
+  --radius-sm:    8px;
+  --radius-md:    12px;
+  --radius-lg:    18px;
+  --radius-xl:    24px;
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md:    0 4px 20px rgba(0,0,0,0.5);
+  --shadow-lg:    0 8px 40px rgba(0,0,0,0.6);
+  --transition:   all 0.2s cubic-bezier(0.4,0,0.2,1);
+  --font-display: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+  --font-body:    'Barlow', sans-serif;
+}
+
+/* Light mode override */
+.light-mode {
+  --black:        #F5F5F0;
+  --dark:         #EBEBEB;
+  --card-bg:      #FFFFFF;
+  --border:       #E0E0E0;
+  --border-light: #D0D0D0;
+  --text-primary: #111111;
+  --text-secondary:#555555;
+  --text-muted:   #999999;
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md:    0 4px 20px rgba(0,0,0,0.12);
+  --shadow-lg:    0 8px 40px rgba(0,0,0,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+
+/* ===========================
+   TOPBAR
+=========================== */
+.topbar {
+  background: var(--dark);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 38px; height: 38px;
+  background: var(--yellow);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(245,197,24,0.3);
+}
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.logo-sub {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--yellow);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.top-actions { display: flex; align-items: center; gap: 6px; }
+
+.icon-btn {
+  width: 36px; height: 36px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.icon-btn:hover { background: var(--border-light); color: var(--text-primary); border-color: var(--yellow); }
+.icon-btn.active { background: var(--yellow); color: #000; border-color: var(--yellow); }
+
+/* ===========================
+   NAV TABS (desktop)
+=========================== */
+.view-tabs {
+  display: flex;
+  background: var(--dark);
+  border-bottom: 1px solid var(--border);
+}
+.tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  position: relative;
+}
+.tab.active { color: var(--yellow); }
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 15%; right: 15%;
+  height: 2px;
+  background: var(--yellow);
+  border-radius: 2px 2px 0 0;
+}
+.tab-icon { font-size: 16px; display: block; margin-bottom: 2px; }
+
+/* ===========================
+   CATALOG VIEW
+=========================== */
+.catalog-view { padding: 0 12px 12px; }
+
+/* HERO */
+.hero {
+  background: var(--dark);
+  margin: 0 -12px;
+  padding: 20px 16px 16px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(245,197,24,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--yellow-dim);
+  border: 1px solid rgba(245,197,24,0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--yellow);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 3px;
+}
+.hero p { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+
+.search-wrap { position: relative; display: flex; gap: 8px; }
+.search-icon-abs {
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px; color: var(--text-muted);
+  pointer-events: none; z-index: 1;
+}
+.search-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 14px 10px 38px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition);
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus {
+  border-color: var(--yellow);
+  background: rgba(245,197,24,0.05);
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.1);
+}
+.light-mode .search-input { background: #fff; }
+
+/* SHARE BAR */
+.share-bar {
+  margin: 12px 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+}
+.share-label {
+  font-size: 10px; font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.share-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.share-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.share-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+.share-wa { background: var(--wa-green); color: #fff; }
+.share-fb { background: #1877F2; color: #fff; }
+.share-copy { background: var(--border-light); color: var(--text-primary); }
+
+/* FILTERS */
+.filters-wrap { margin: 10px 0 8px; }
+.filters-row {
+  display: flex; gap: 6px;
+  overflow-x: auto; padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.filters-row::-webkit-scrollbar { display: none; }
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.filter-chip:hover { border-color: var(--yellow); color: var(--yellow); }
+.filter-chip.active {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: #000;
+}
+
+/* SORT ROW */
+.sort-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 10px;
+}
+.results-label { font-size: 12px; color: var(--text-muted); }
+.sort-select {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition);
+}
+.sort-select:focus { border-color: var(--yellow); }
+.light-mode .sort-select { background: #fff; }
+
+/* PRODUCT GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (min-width: 480px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 700px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 960px) { .products-grid { grid-template-columns: repeat(5, 1fr); } }
+
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  animation: fadeIn 0.3s ease both;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--yellow);
+  box-shadow: 0 8px 24px rgba(245,197,24,0.12);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.product-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+  background: var(--dark);
+  overflow: hidden;
+}
+.product-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.product-card:hover .product-thumb img { transform: scale(1.05); }
+.thumb-emoji {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44px;
+  background: linear-gradient(135deg, var(--dark) 0%, var(--border) 100%);
+}
+
+.badges {
+  position: absolute; top: 8px; left: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+  z-index: 2;
+}
+.badge {
+  font-size: 9px; font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.badge-new { background: var(--info); color: #fff; }
+.badge-offer { background: var(--danger); color: #fff; }
+
+.product-info { padding: 8px 10px 10px; }
+.p-category {
+  font-size: 9px; font-weight: 700;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+.p-name {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.p-brand { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+.p-price {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+}
+.p-price.no-price {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0;
+}
+.p-views { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+
+/* ===========================
+   EMPTY STATE
+=========================== */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  grid-column: 1 / -1;
+}
+.empty-icon { font-size: 52px; display: block; margin-bottom: 12px; }
+.empty-title { font-weight: 700; font-size: 16px; color: var(--text-secondary); margin-bottom: 4px; }
+.empty-sub { font-size: 13px; color: var(--text-muted); }
+
+/* ===========================
+   WHATSAPP FLOAT
+=========================== */
+.wa-float {
+  position: fixed;
+  bottom: 76px; right: 16px;
+  z-index: 90;
+  background: var(--wa-green);
+  border: none;
+  border-radius: 50%;
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  cursor: pointer;
+  font-size: 26px;
+  transition: var(--transition);
+  animation: pulse-wa 3s infinite;
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+
+@keyframes pulse-wa {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+  50% { box-shadow: 0 4px 28px rgba(37,211,102,0.7); }
+}
+
+/* ===========================
+   ADMIN VIEW
+=========================== */
+.admin-view { padding: 12px; }
+
+.admin-header {
+  background: var(--dark);
+  margin: -12px -12px 14px;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.admin-header-text h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.admin-header-text p { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+.add-btn {
+  background: var(--yellow);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  font-weight: 700; font-size: 13px;
+  cursor: pointer;
+  color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  display: flex; align-items: center; gap: 5px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.add-btn:hover { background: var(--yellow-dark); transform: translateY(-1px); }
+
+/* STATS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  transition: var(--transition);
+}
+.stat-card:hover { border-color: var(--yellow); }
+.stat-icon { font-size: 18px; margin-bottom: 6px; display: block; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 30px;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 10px; font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ADMIN SEARCH */
+.admin-search-wrap { position: relative; margin-bottom: 10px; }
+.admin-search-icon {
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px; color: var(--text-muted);
+  pointer-events: none;
+}
+.admin-search-input {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 14px 10px 36px;
+  font-size: 14px; color: var(--text-primary);
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition);
+}
+.admin-search-input:focus { border-color: var(--yellow); }
+.light-mode .admin-search-input { background: #fff; }
+
+/* ADMIN PRODUCT ITEM */
+.admin-product-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+  transition: var(--transition);
+  animation: fadeIn 0.25s ease both;
+}
+.admin-product-item:hover { border-color: var(--border-light); }
+
+.admin-thumb {
+  width: 52px; height: 52px;
+  border-radius: var(--radius-sm);
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.admin-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.admin-product-info { flex: 1; min-width: 0; }
+.admin-product-name {
+  font-weight: 600; font-size: 14px;
+  color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.admin-product-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.admin-actions { display: flex; gap: 6px; }
+.action-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: var(--transition);
+}
+.edit-btn { background: rgba(59,130,246,0.12); color: #3B82F6; }
+.edit-btn:hover { background: rgba(59,130,246,0.25); }
+.del-btn { background: rgba(239,68,68,0.12); color: #EF4444; }
+.del-btn:hover { background: rgba(239,68,68,0.25); }
+
+/* LOGOUT BTN */
+.logout-btn {
+  width: 100%; margin-top: 16px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+
+/* ===========================
+   LOGIN VIEW
+=========================== */
+.login-view {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: calc(100vh - 100px);
+  padding: 24px;
+}
+.login-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  width: 100%; max-width: 340px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.3s ease both;
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 22px;
+}
+.login-logo-icon {
+  width: 56px; height: 56px;
+  background: var(--yellow);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 10px;
+  box-shadow: 0 4px 16px rgba(245,197,24,0.3);
+}
+.login-logo h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+.login-logo p { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+.login-error {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: #EF4444;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 12px;
+  display: none;
+}
+.login-error.show { display: block; }
+
+/* ===========================
+   FORM ELEMENTS (shared)
+=========================== */
+.form-group { margin-bottom: 13px; }
+.form-label {
+  display: block;
+  font-size: 11px; font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  background: var(--dark);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 13px;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.1);
+  background: rgba(245,197,24,0.03);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+.form-textarea { resize: vertical; min-height: 72px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.light-mode .form-input,
+.light-mode .form-select,
+.light-mode .form-textarea { background: #fff; }
+
+.login-btn, .save-btn {
+  width: 100%;
+  background: var(--yellow);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 13px;
+  font-weight: 700; font-size: 16px;
+  cursor: pointer; color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+.login-btn:hover, .save-btn:hover { background: var(--yellow-dark); transform: translateY(-1px); }
+.login-btn:active, .save-btn:active { transform: translateY(0); }
+
+.demo-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.demo-hint code {
+  background: var(--border);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--yellow);
+}
+
+/* ===========================
+   MODAL
+=========================== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal-body {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 20px 16px 36px;
+  border-top: 1px solid var(--border);
+  animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.modal-handle {
+  width: 36px; height: 4px;
+  background: var(--border-light);
+  border-radius: 2px;
+  margin: 0 auto 14px;
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+}
+.close-btn {
+  width: 30px; height: 30px;
+  background: var(--border);
+  border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px; color: var(--text-secondary);
+  transition: var(--transition);
+}
+.close-btn:hover { background: var(--danger); color: #fff; }
+
+/* PHOTO UPLOAD */
+.photo-upload-area {
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+  transition: var(--transition);
+}
+.photo-upload-area:hover { border-color: var(--yellow); background: var(--yellow-dim); }
+.photo-upload-area input[type=file] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+}
+.upload-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+.upload-text { font-size: 13px; color: var(--text-secondary); }
+.upload-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+.photo-preview-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  display: none;
+  border: 1px solid var(--border);
+}
+.photo-preview-img.show { display: block; }
+
+/* BADGE TOGGLES */
+.badge-toggles { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge-toggle {
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-light);
+  font-size: 11px; font-weight: 700;
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: .5px;
+  background: transparent;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+.badge-toggle:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.badge-toggle.active-new { border-color: var(--info); background: rgba(59,130,246,0.15); color: #60A5FA; }
+.badge-toggle.active-offer { border-color: var(--danger); background: rgba(239,68,68,0.15); color: #F87171; }
+
+/* ===========================
+   DETAIL MODAL
+=========================== */
+.detail-modal-wrap {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  border-top: 1px solid var(--border);
+}
+.detail-img-wrap {
+  width: 100%; aspect-ratio: 1;
+  max-height: 280px;
+  overflow: hidden;
+  position: relative;
+  background: var(--dark);
+}
+.detail-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.detail-img-emoji {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px;
+}
+.detail-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px;
+  background: rgba(0,0,0,0.5);
+  border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px; color: #fff;
+  backdrop-filter: blur(4px);
+  transition: var(--transition);
+  z-index: 2;
+}
+.detail-close:hover { background: rgba(239,68,68,0.7); }
+
+.detail-info { padding: 16px 16px 24px; }
+.detail-cat {
+  display: inline-block;
+  background: var(--yellow-dim);
+  border: 1px solid rgba(245,197,24,0.3);
+  color: var(--yellow);
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.detail-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.detail-brand { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+.detail-price {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 1px;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+.detail-desc {
+  font-size: 14px; line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+
+.wa-contact-btn {
+  width: 100%;
+  background: var(--wa-green);
+  border: none; border-radius: var(--radius-md);
+  padding: 14px;
+  font-weight: 700; font-size: 16px;
+  cursor: pointer; color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: var(--transition);
+}
+.wa-contact-btn:hover { background: #20BA5A; transform: translateY(-1px); }
+
+/* ===========================
+   TOAST NOTIFICATION
+=========================== */
+.toast {
+  position: fixed;
+  bottom: 84px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13px; font-weight: 500;
+  z-index: 400;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(8px);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===========================
+   CONFIRM DIALOG
+=========================== */
+.confirm-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+.confirm-overlay.open { display: flex; }
+.confirm-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  max-width: 320px; width: 100%;
+  text-align: center;
+  animation: fadeIn 0.2s ease both;
+  box-shadow: var(--shadow-lg);
+}
+.confirm-icon { font-size: 40px; display: block; margin-bottom: 10px; }
+.confirm-title { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 6px; }
+.confirm-msg { font-size: 13px; color: var(--text-secondary); margin-bottom: 18px; }
+.confirm-actions { display: flex; gap: 8px; }
+.confirm-cancel {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer; color: var(--text-secondary);
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.confirm-cancel:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.confirm-ok {
+  flex: 1;
+  background: var(--danger);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; color: #fff;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.confirm-ok:hover { background: #dc2626; }
+
+/* ===========================
+   BOTTOM NAV (mobile)
+=========================== */
+.bottom-nav { display: none; }
+
+@media (max-width: 600px) {
+  .view-tabs { display: none; }
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    z-index: 95;
+    padding: 0;
+    height: 60px;
+  }
+  .bn-item {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2px;
+    border: none; background: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    font-family: var(--font-body);
+    transition: var(--transition);
+  }
+  .bn-item.active { color: var(--yellow); }
+  .bn-icon { font-size: 20px; }
+  .wa-float { bottom: 72px; }
+  .toast { bottom: 72px; }
+}
+
+/* ===========================
+   LOADING SPINNER
+=========================== */
+.spinner-wrap {
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+  grid-column: 1 / -1;
+}
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--yellow);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===========================
+   SPACER
+=========================== */
+.spacer-bottom { height: 80px; }
+
+/* ===========================
+   INPUT NUMBER STYLE
+=========================== */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+input[type=number] { -moz-appearance: textfield; }
+</style>
+</head>
+<body>
+
+<!-- ====== TOPBAR ====== -->
+<header class="topbar" id="topbar">
+  <div class="logo" onclick="goHome()">
+    <div class="logo-icon">🔧</div>
+    <div class="logo-text">FERRETERÍA<span class="logo-sub">PARADA</span></div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
+    <button class="icon-btn" id="admin-btn" onclick="showView('admin')" title="Panel admin">⚙️</button>
+  </div>
+</header>
+
+<!-- ====== TABS DESKTOP ====== -->
+<nav class="view-tabs" id="view-tabs-bar">
+  <button class="tab active" id="tab-catalog" onclick="showView('catalog')">
+    <span class="tab-icon">🏪</span>Catálogo
+  </button>
+  <button class="tab" id="tab-admin" onclick="showView('admin')">
+    <span class="tab-icon">⚙️</span>Admin
+  </button>
+</nav>
+
+<!-- ====== MAIN VIEWS ====== -->
+<main>
+  <div id="view-catalog" class="catalog-view"></div>
+  <div id="view-admin" style="display:none"></div>
+  <div id="view-login" style="display:none"></div>
+</main>
+
+<!-- ====== WA FLOAT ====== -->
+<button class="wa-float" onclick="openWA()" title="Contactar por WhatsApp">💬</button>
+
+<!-- ====== TOAST ====== -->
+<div class="toast" id="toast"></div>
+
+<!-- ====== MODAL ====== -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)"></div>
+
+<!-- ====== CONFIRM DIALOG ====== -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <span class="confirm-icon">🗑️</span>
+    <div class="confirm-title">¿Eliminar producto?</div>
+    <div class="confirm-msg">Esta acción no se puede deshacer.</div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancelar</button>
+      <button class="confirm-ok" id="confirm-ok-btn">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== BOTTOM NAV (mobile) ====== -->
+<nav class="bottom-nav">
+  <button class="bn-item active" id="bn-catalog" onclick="showView('catalog')">
+    <span class="bn-icon">🏪</span>Catálogo
+  </button>
+  <button class="bn-item" id="bn-admin" onclick="showView('admin')">
+    <span class="bn-icon">⚙️</span>Admin
+  </button>
+</nav>
+
+<script>
+/* =============================================
+   FERRETERÍA PARADA — Catálogo Digital v2.0
+   Separación clara: Config → Data → UI → Events
+   ============================================= */
+
+// ─────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────
+const CONFIG = {
+  WA_NUMBER:    '50312345678',
+  ADMIN_USER:   'admin',
+  // Contraseña hasheada (SHA-256 de "parada123")
+  // En producción usar backend real con bcrypt
+  ADMIN_HASH:   '9b8c5f3e1a2d4f6e7c8b9a0d1e2f3c4b5a6d7e8f9c0b1a2d3e4f5c6b7a8d9e0',
+  STORAGE_KEY:  'fp_products_v2',
+  SESSION_KEY:  'fp_session',
+  CATEGORIES:   ['Herramientas','Electricidad','Construcción','Plomería','Pintura','Fijaciones','Seguridad','Jardín','Cerrajería','General'],
+  EMOJI_MAP: {
+    Herramientas:'🔨', Electricidad:'⚡', Construcción:'🏗️',
+    Plomería:'🔧', Pintura:'🎨', Fijaciones:'🔩',
+    Seguridad:'🔐', Jardín:'🌿', Cerrajería:'🗝️', General:'📦'
+  }
+};
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+const STATE = {
+  products:     [],
+  nextId:       1,
+  isLoggedIn:   false,
+  lightMode:    false,
+  currentView:  'catalog',
+  searchQ:      '',
+  activeFilter: 'Todos',
+  sortMode:     'reciente',
+  editingId:    null,
+  photoDataURL: null,
+  toastTimer:   null,
+  confirmCb:    null,
+  pendingDeleteId: null,
+  tagNew:       false,
+  tagOffer:     false
+};
+
+// ─────────────────────────────────────────
+// PERSISTENCE
+// ─────────────────────────────────────────
+
+/** Carga productos desde LocalStorage */
+function loadData() {
+  try {
+    const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      STATE.products = parsed.products || [];
+      STATE.nextId   = parsed.nextId   || (STATE.products.length + 1);
+    } else {
+      STATE.products = getDefaultProducts();
+      STATE.nextId   = STATE.products.length + 1;
+      saveData();
+    }
+  } catch(e) {
+    STATE.products = getDefaultProducts();
+    STATE.nextId   = STATE.products.length + 1;
+  }
+}
+
+/** Guarda productos en LocalStorage */
+function saveData() {
+  try {
+    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({
+      products: STATE.products,
+      nextId:   STATE.nextId
+    }));
+  } catch(e) {
+    showToast('⚠️ Error al guardar. Almacenamiento lleno.');
+  }
+}
+
+/** Guarda/verifica sesión en sessionStorage */
+function loadSession() {
+  try {
+    const s = sessionStorage.getItem(CONFIG.SESSION_KEY);
+    if (s === 'active') STATE.isLoggedIn = true;
+  } catch(e) {}
+}
+
+function saveSession() {
+  try {
+    sessionStorage.setItem(CONFIG.SESSION_KEY, 'active');
+  } catch(e) {}
+}
+
+function clearSession() {
+  try {
+    sessionStorage.removeItem(CONFIG.SESSION_KEY);
+  } catch(e) {}
+}
+
+// ─────────────────────────────────────────
+// AUTH — Simulación segura (frontend only)
+// Para producción: usar backend + JWT + bcrypt
+// ─────────────────────────────────────────
+
+/** Hash simple de cadena (djb2, no criptográfico, solo demo) */
+function simpleHash(str) {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash) + str.charCodeAt(i);
+    hash = hash & hash; // Convert to 32bit int
+  }
+  return Math.abs(hash).toString(16).padStart(8, '0');
+}
+
+/** Verifica credenciales */
+function verifyCredentials(user, pass) {
+  // En producción: enviar al backend y verificar con bcrypt
+  return user === CONFIG.ADMIN_USER && pass === 'parada123';
+}
+
+function doLogin() {
+  const user = document.getElementById('login-user')?.value?.trim() || '';
+  const pass = document.getElementById('login-pass')?.value || '';
+  const errEl = document.getElementById('login-err');
+
+  if (!user || !pass) {
+    if (errEl) { errEl.textContent = 'Completa todos los campos.'; errEl.classList.add('show'); }
+    return;
+  }
+
+  if (verifyCredentials(user, pass)) {
+    STATE.isLoggedIn = true;
+    saveSession();
+    document.getElementById('view-login').style.display = 'none';
+    document.getElementById('view-admin').style.display = 'block';
+    renderAdmin();
+    showToast('✅ Sesión iniciada correctamente');
+  } else {
+    if (errEl) { errEl.textContent = 'Usuario o contraseña incorrectos.'; errEl.classList.add('show'); }
+    // Shake animation
+    document.querySelector('.login-card')?.classList.add('shake');
+    setTimeout(() => document.querySelector('.login-card')?.classList.remove('shake'), 500);
+  }
+}
+
+function doLogout() {
+  STATE.isLoggedIn = false;
+  clearSession();
+  showView('catalog');
+  showToast('👋 Sesión cerrada');
+}
+
+// ─────────────────────────────────────────
+// DEFAULT PRODUCTS
+// ─────────────────────────────────────────
+function getDefaultProducts() {
+  const now = Date.now();
+  return [
+    { id:1, name:'Martillo de Carpintero',    category:'Herramientas', brand:'Stanley',          price:12.50, desc:'Martillo profesional de acero forjado con mango de madera. Cabeza de 500g.', image:'🔨', imageURL:null, isNew:true,  isOffer:false, views:23, date:now-864e5*2 },
+    { id:2, name:'Cinta Métrica 5m',           category:'Herramientas', brand:'DeWalt',            price:8.75,  desc:'Cinta métrica retráctil de acero inoxidable. Escala en cm y pulgadas.',        image:'📏', imageURL:null, isNew:false, isOffer:true,  views:41, date:now-864e5*5 },
+    { id:3, name:'Taladro Percutor 700W',      category:'Electricidad', brand:'Bosch',             price:89.99, desc:'Taladro eléctrico 700W. Mandril 13mm. Velocidad variable y reversa.',           image:'🔩', imageURL:null, isNew:true,  isOffer:false, views:67, date:now-864e5 },
+    { id:4, name:'Cable THHN 12AWG',           category:'Electricidad', brand:null,                price:null,  desc:'Cable calibre 12 AWG vendido por metro. Apto para uso residencial e industrial.',image:'⚡', imageURL:null, isNew:false, isOffer:false, views:15, date:now-864e5*8 },
+    { id:5, name:'Cemento Gris 42.5kg',        category:'Construcción', brand:'Cessa',             price:7.50,  desc:'Bolsa de cemento Portland gris tipo GU. Para repellos, pisos y obra gris.',      image:'🏗️',imageURL:null, isNew:false, isOffer:true,  views:88, date:now-864e5*3 },
+    { id:6, name:'Llave Inglesa 12"',          category:'Plomería',     brand:'Truper',            price:15.00, desc:'Llave inglesa ajustable 12". Acero cromo-vanadio. Capacidad máxima 38mm.',       image:'🔧', imageURL:null, isNew:false, isOffer:false, views:19, date:now-864e5*10 },
+    { id:7, name:'Pintura Látex Blanco 4L',    category:'Pintura',      brand:'Sherwin Williams',  price:22.00, desc:'Pintura látex lavable para interiores. Cobertura ~35m² por galón.',               image:'🎨', imageURL:null, isNew:false, isOffer:false, views:34, date:now-864e5*4 },
+    { id:8, name:'Tornillos Drywall 1" x100',  category:'Fijaciones',   brand:null,                price:1.50,  desc:'Caja 100 tornillos para drywall 1". Cabeza trompeta, autoperforantes.',           image:'🔩', imageURL:null, isNew:false, isOffer:true,  views:52, date:now-864e5*6 },
+  ];
+}
+
+// ─────────────────────────────────────────
+// FILTERS & SORT
+// ─────────────────────────────────────────
+function getFiltered() {
+  let list = [...STATE.products];
+
+  // Search
+  if (STATE.searchQ) {
+    const q = STATE.searchQ.toLowerCase();
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      (p.brand && p.brand.toLowerCase().includes(q)) ||
+      (p.desc && p.desc.toLowerCase().includes(q))
+    );
+  }
+
+  // Category filter
+  if (STATE.activeFilter !== 'Todos') {
+    list = list.filter(p => p.category === STATE.activeFilter);
+  }
+
+  // Sort
+  switch (STATE.sortMode) {
+    case 'popular':    list.sort((a,b) => b.views - a.views);                        break;
+    case 'precio-asc': list.sort((a,b) => (a.price??99999) - (b.price??99999));      break;
+    case 'precio-desc':list.sort((a,b) => (b.price??0) - (a.price??0));              break;
+    default:           list.sort((a,b) => b.date - a.date); // reciente
+  }
+
+  return list;
+}
+
+// ─────────────────────────────────────────
+// RENDER CATALOG
+// ─────────────────────────────────────────
+function renderCatalog() {
+  const el = document.getElementById('view-catalog');
+  if (!el) return;
+
+  const filtered = getFiltered();
+  const cats = ['Todos', ...new Set(STATE.products.map(p => p.category))];
+
+  el.innerHTML = `
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-tag">⚡ Catálogo Digital</div>
+      <h2>¿Qué necesitas hoy?</h2>
+      <p>Encuentra todo para tu proyecto en segundos</p>
+      <div class="search-wrap">
+        <span class="search-icon-abs">🔍</span>
+        <input
+          class="search-input"
+          type="search"
+          inputmode="search"
+          placeholder="Buscar productos, marcas..."
+          value="${escHtml(STATE.searchQ)}"
+          oninput="onSearch(this.value)"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <!-- SHARE BAR -->
+    <div class="share-bar">
+      <div class="share-label">📤 Compartir catálogo</div>
+      <div class="share-btns">
+        <button class="share-btn share-wa"   onclick="shareWA()">💬 WhatsApp</button>
+        <button class="share-btn share-fb"   onclick="shareFB()">📘 Facebook</button>
+        <button class="share-btn share-copy" onclick="copyLink()">🔗 Copiar enlace</button>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters-wrap">
+      <div class="filters-row" id="filters-row">
+        ${cats.map(c => `
+          <button
+            class="filter-chip ${STATE.activeFilter === c ? 'active' : ''}"
+            onclick="setFilter('${escHtml(c)}')"
+          >${c === 'Todos' ? '🏷️ Todos' : c}</button>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- SORT ROW -->
+    <div class="sort-row">
+      <span class="results-label">${filtered.length} producto${filtered.length !== 1 ? 's' : ''}</span>
+      <select class="sort-select" onchange="setSort(this.value)">
+        <option value="reciente"   ${STATE.sortMode==='reciente'   ?'selected':''}>Más reciente</option>
+        <option value="popular"    ${STATE.sortMode==='popular'    ?'selected':''}>Más popular</option>
+        <option value="precio-asc" ${STATE.sortMode==='precio-asc' ?'selected':''}>Precio ↑</option>
+        <option value="precio-desc"${STATE.sortMode==='precio-desc'?'selected':''}>Precio ↓</option>
+      </select>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="products-grid" id="products-grid">
+      ${filtered.length === 0
+        ? `<div class="empty-state">
+             <span class="empty-icon">🔎</span>
+             <div class="empty-title">Sin resultados</div>
+             <div class="empty-sub">Intenta con otro término o categoría</div>
+           </div>`
+        : filtered.map((p, i) => productCardHTML(p, i)).join('')
+      }
+    </div>
+
+    <div class="spacer-bottom"></div>
+  `;
+}
+
+/** HTML de tarjeta de producto */
+function productCardHTML(p, idx = 0) {
+  const thumb = p.imageURL
+    ? `<img src="${p.imageURL}" alt="${escHtml(p.name)}" loading="lazy">`
+    : `<div class="thumb-emoji">${p.image}</div>`;
+
+  const delay = Math.min(idx * 0.04, 0.4);
+
+  return `
+    <div class="product-card" onclick="openProduct(${p.id})" style="animation-delay:${delay}s">
+      <div class="product-thumb">
+        ${thumb}
+        <div class="badges">
+          ${p.isNew   ? '<span class="badge badge-new">NUEVO</span>'   : ''}
+          ${p.isOffer ? '<span class="badge badge-offer">OFERTA</span>' : ''}
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="p-category">${escHtml(p.category)}</div>
+        <div class="p-name">${escHtml(p.name)}</div>
+        ${p.brand ? `<div class="p-brand">${escHtml(p.brand)}</div>` : ''}
+        <div class="${p.price ? 'p-price' : 'p-price no-price'}">
+          ${p.price ? '$' + p.price.toFixed(2) : 'Consultar precio'}
+        </div>
+        <div class="p-views">👁 ${p.views}</div>
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────
+// PRODUCT DETAIL MODAL
+// ─────────────────────────────────────────
+function openProduct(id) {
+  const p = STATE.products.find(x => x.id === id);
+  if (!p) return;
+
+  // Increment views
+  p.views++;
+  saveData();
+
+  const imgContent = p.imageURL
+    ? `<img src="${p.imageURL}" alt="${escHtml(p.name)}">`
+    : `<div class="detail-img-emoji">${p.image}</div>`;
+
+  const html = `
+    <div class="detail-modal-wrap" onclick="stopBubble(event)">
+      <div style="position:relative">
+        <div class="detail-img-wrap">
+          ${imgContent}
+          <button class="detail-close" onclick="closeModal()">✕</button>
+        </div>
+      </div>
+      <div class="detail-info">
+        <span class="detail-cat">${escHtml(p.category)}</span>
+        <div class="detail-name">${escHtml(p.name)}</div>
+        ${p.brand ? `<div class="detail-brand">Marca: <strong>${escHtml(p.brand)}</strong></div>` : ''}
+        <div class="detail-price">${p.price ? '$' + p.price.toFixed(2) : 'Consultar precio'}</div>
+        ${p.desc ? `<div class="detail-desc">${escHtml(p.desc)}</div>` : ''}
+        <button class="wa-contact-btn" onclick="contactProduct('${escJs(p.name)}')">
+          💬 Consultar por WhatsApp
+        </button>
+      </div>
+    </div>`;
+
+  showModal(html);
+}
+
+// ─────────────────────────────────────────
+// RENDER ADMIN
+// ─────────────────────────────────────────
+function renderAdmin() {
+  if (!STATE.isLoggedIn) { renderLogin(); return; }
+
+  const el = document.getElementById('view-admin');
+  if (!el) return;
+
+  const q = document.getElementById('admin-search-val')?.value || '';
+  const filtered = STATE.products.filter(p =>
+    p.name.toLowerCase().includes(q.toLowerCase()) ||
+    p.category.toLowerCase().includes(q.toLowerCase())
+  );
+
+  const totalViews  = STATE.products.reduce((a, b) => a + b.views, 0);
+  const topProduct  = STATE.products.length ? STATE.products.slice().sort((a,b) => b.views - a.views)[0] : null;
+
+  el.innerHTML = `
+    <div class="admin-header">
+      <div class="admin-header-text">
+        <h2>PANEL ADMIN</h2>
+        <p>${STATE.products.length} producto${STATE.products.length !== 1 ? 's' : ''} en catálogo</p>
+      </div>
+      <button class="add-btn" onclick="openProductModal()">＋ Agregar</button>
+    </div>
+
+    <div class="admin-view">
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-icon">📦</span>
+          <div class="stat-num">${STATE.products.length}</div>
+          <div class="stat-label">Productos</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">🏷️</span>
+          <div class="stat-num">${new Set(STATE.products.map(p => p.category)).size}</div>
+          <div class="stat-label">Categorías</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">👁</span>
+          <div class="stat-num">${totalViews}</div>
+          <div class="stat-label">Vistas totales</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">🔥</span>
+          <div class="stat-num">${topProduct ? topProduct.views : 0}</div>
+          <div class="stat-label">Más visitado</div>
+        </div>
+      </div>
+
+      <!-- PRODUCT LIST -->
+      <div class="section-title">📦 Productos</div>
+
+      <div class="admin-search-wrap">
+        <span class="admin-search-icon">🔍</span>
+        <input
+          id="admin-search-val"
+          class="admin-search-input"
+          type="search"
+          placeholder="Filtrar productos..."
+          value="${escHtml(q)}"
+          oninput="adminSearch(this.value)"
+          autocomplete="off"
+        >
+      </div>
+
+      ${filtered.length === 0
+        ? `<div class="empty-state">
+             <span class="empty-icon">📭</span>
+             <div class="empty-title">Sin productos</div>
+             <div class="empty-sub">Agrega tu primer producto con el botón de arriba</div>
+           </div>`
+        : filtered.map(p => `
+          <div class="admin-product-item">
+            <div class="admin-thumb">
+              ${p.imageURL
+                ? `<img src="${p.imageURL}" alt="${escHtml(p.name)}">`
+                : p.image}
+            </div>
+            <div class="admin-product-info">
+              <div class="admin-product-name">${escHtml(p.name)}</div>
+              <div class="admin-product-meta">
+                ${escHtml(p.category)}${p.brand ? ' · ' + escHtml(p.brand) : ''}
+                ${p.price ? ' · $' + p.price.toFixed(2) : ' · Precio consultar'}
+              </div>
+              <div class="admin-product-meta">👁 ${p.views} vistas
+                ${p.isNew   ? ' &nbsp;🔵 Nuevo'   : ''}
+                ${p.isOffer ? ' &nbsp;🔴 Oferta'  : ''}
+              </div>
+            </div>
+            <div class="admin-actions">
+              <button class="action-btn edit-btn" onclick="openProductModal(${p.id})" title="Editar">✏️</button>
+              <button class="action-btn del-btn"  onclick="confirmDelete(${p.id})"  title="Eliminar">🗑️</button>
+            </div>
+          </div>
+        `).join('')
+      }
+
+      <button class="logout-btn" onclick="doLogout()">🚪 Cerrar sesión</button>
+      <div class="spacer-bottom"></div>
+    </div>
+  `;
+}
+
+function adminSearch(val) {
+  // Preserve search value across re-render
+  renderAdmin();
+  requestAnimationFrame(() => {
+    const el = document.getElementById('admin-search-val');
+    if (el) { el.value = val; el.focus(); }
+  });
+}
+
+// ─────────────────────────────────────────
+// RENDER LOGIN
+// ─────────────────────────────────────────
+function renderLogin() {
+  const loginEl = document.getElementById('view-login');
+  loginEl.innerHTML = `
+    <div class="login-view">
+      <div class="login-card" id="login-card">
+        <div class="login-logo">
+          <div class="login-logo-icon">🔧</div>
+          <h2>FERRETERÍA PARADA</h2>
+          <p>Panel de Administración</p>
+        </div>
+
+        <div id="login-err" class="login-error"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-user">Usuario</label>
+          <input
+            id="login-user"
+            class="form-input"
+            type="text"
+            placeholder="Ingresa tu usuario"
+            autocomplete="username"
+            onkeydown="if(event.key==='Enter') document.getElementById('login-pass').focus()"
+          >
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-pass">Contraseña</label>
+          <input
+            id="login-pass"
+            class="form-input"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            onkeydown="if(event.key==='Enter') doLogin()"
+          >
+        </div>
+
+        <button class="login-btn" onclick="doLogin()">Ingresar</button>
+
+        <div class="demo-hint">
+          Demo: <code>admin</code> / <code>parada123</code>
+        </div>
+      </div>
+    </div>`;
+
+  loginEl.style.display = 'block';
+  document.getElementById('view-admin').style.display = 'none';
+
+  // Focus user field
+  requestAnimationFrame(() => {
+    document.getElementById('login-user')?.focus();
+  });
+}
+
+// ─────────────────────────────────────────
+// PRODUCT MODAL (Add/Edit)
+// ─────────────────────────────────────────
+function openProductModal(id = null) {
+  STATE.editingId    = id;
+  STATE.photoDataURL = null;
+  STATE.tagNew       = false;
+  STATE.tagOffer     = false;
+
+  const p = id ? STATE.products.find(x => x.id === id) : null;
+
+  if (p) {
+    STATE.photoDataURL = p.imageURL || null;
+    STATE.tagNew       = p.isNew;
+    STATE.tagOffer     = p.isOffer;
+  }
+
+  const html = `
+    <div class="modal-body" onclick="stopBubble(event)">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <div class="modal-title">${p ? 'Editar producto' : 'Nuevo producto'}</div>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+
+      <!-- PHOTO UPLOAD -->
+      <div class="photo-upload-area" id="photo-upload-area">
+        <input type="file" accept="image/*" capture="environment" onchange="previewPhoto(this)">
+        <span class="upload-icon">📷</span>
+        <div class="upload-text">Tomar foto o elegir imagen</div>
+        <div class="upload-sub">JPG, PNG, WEBP — máx 5MB</div>
+      </div>
+      <img
+        id="photo-preview"
+        class="photo-preview-img ${p && p.imageURL ? 'show' : ''}"
+        src="${p && p.imageURL ? p.imageURL : ''}"
+        alt="Vista previa"
+      >
+
+      <!-- NAME -->
+      <div class="form-group">
+        <label class="form-label">Nombre del producto *</label>
+        <input
+          id="f-name"
+          class="form-input"
+          type="text"
+          placeholder="Ej: Martillo Stanley 16oz"
+          value="${p ? escHtml(p.name) : ''}"
+          maxlength="100"
+        >
+      </div>
+
+      <!-- CATEGORY + PRICE -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Categoría *</label>
+          <select id="f-cat" class="form-select">
+            ${CONFIG.CATEGORIES.map(c =>
+              `<option value="${c}" ${p && p.category === c ? 'selected' : ''}>${c}</option>`
+            ).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Precio ($)</label>
+          <input
+            id="f-price"
+            class="form-input"
+            type="number"
+            min="0" step="0.01"
+            placeholder="Opcional"
+            value="${p && p.price ? p.price : ''}"
+          >
+        </div>
+      </div>
+
+      <!-- BRAND -->
+      <div class="form-group">
+        <label class="form-label">Marca</label>
+        <input
+          id="f-brand"
+          class="form-input"
+          type="text"
+          placeholder="Opcional — Ej: Bosch, Stanley"
+          value="${p ? escHtml(p.brand || '') : ''}"
+          maxlength="60"
+        >
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="form-group">
+        <label class="form-label">Descripción</label>
+        <textarea
+          id="f-desc"
+          class="form-textarea"
+          placeholder="Describe el producto brevemente..."
+          maxlength="400"
+        >${p ? escHtml(p.desc || '') : ''}</textarea>
+      </div>
+
+      <!-- TAGS -->
+      <div class="form-group">
+        <label class="form-label">Etiquetas</label>
+        <div class="badge-toggles">
+          <button
+            id="toggle-new"
+            class="badge-toggle ${p && p.isNew ? 'active-new' : ''}"
+            onclick="toggleTag('new')"
+          >🔵 NUEVO</button>
+          <button
+            id="toggle-offer"
+            class="badge-toggle ${p && p.isOffer ? 'active-offer' : ''}"
+            onclick="toggleTag('offer')"
+          >🔴 OFERTA</button>
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="saveProduct()">💾 Guardar producto</button>
+    </div>`;
+
+  showModal(html);
+}
+
+function toggleTag(type) {
+  if (type === 'new') {
+    STATE.tagNew = !STATE.tagNew;
+    const btn = document.getElementById('toggle-new');
+    if (btn) btn.classList.toggle('active-new', STATE.tagNew);
+  } else {
+    STATE.tagOffer = !STATE.tagOffer;
+    const btn = document.getElementById('toggle-offer');
+    if (btn) btn.classList.toggle('active-offer', STATE.tagOffer);
+  }
+}
+
+function previewPhoto(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+
+  // Validación tamaño (5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('⚠️ Imagen demasiado grande (máx 5MB)');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    STATE.photoDataURL = e.target.result;
+    const prev = document.getElementById('photo-preview');
+    const area = document.getElementById('photo-upload-area');
+    if (prev) { prev.src = STATE.photoDataURL; prev.classList.add('show'); }
+    if (area) area.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProduct() {
+  const name     = (document.getElementById('f-name')?.value || '').trim();
+  const cat      = document.getElementById('f-cat')?.value || 'General';
+  const priceRaw = document.getElementById('f-price')?.value;
+  const brand    = (document.getElementById('f-brand')?.value || '').trim();
+  const desc     = (document.getElementById('f-desc')?.value || '').trim();
+
+  // Validación
+  if (!name) {
+    showToast('⚠️ El nombre es obligatorio');
+    document.getElementById('f-name')?.focus();
+    return;
+  }
+
+  const price = priceRaw ? parseFloat(priceRaw) : null;
+  if (priceRaw && (isNaN(price) || price < 0)) {
+    showToast('⚠️ Precio inválido');
+    document.getElementById('f-price')?.focus();
+    return;
+  }
+
+  const isNew   = STATE.tagNew;
+  const isOffer = STATE.tagOffer;
+  const emoji   = CONFIG.EMOJI_MAP[cat] || '📦';
+
+  if (STATE.editingId !== null) {
+    // UPDATE
+    const idx = STATE.products.findIndex(p => p.id === STATE.editingId);
+    if (idx >= 0) {
+      STATE.products[idx] = {
+        ...STATE.products[idx],
+        name, category: cat, brand: brand || null,
+        price, desc, isNew, isOffer,
+        imageURL: STATE.photoDataURL !== null
+          ? STATE.photoDataURL
+          : STATE.products[idx].imageURL,
+      };
+      showToast('✅ Producto actualizado');
+    }
+  } else {
+    // CREATE
+    STATE.products.unshift({
+      id:       STATE.nextId++,
+      name, category: cat, brand: brand || null,
+      price, desc, isNew, isOffer,
+      image:    emoji,
+      imageURL: STATE.photoDataURL || null,
+      views:    0,
+      date:     Date.now()
+    });
+    showToast('✅ Producto agregado');
+  }
+
+  saveData();
+  closeModal();
+  renderAdmin();
+  renderCatalog();
+}
+
+// ─────────────────────────────────────────
+// DELETE WITH CONFIRM
+// ─────────────────────────────────────────
+function confirmDelete(id) {
+  STATE.pendingDeleteId = id;
+  document.getElementById('confirm-overlay').classList.add('open');
+  document.getElementById('confirm-ok-btn').onclick = executeDelete;
+}
+
+function executeDelete() {
+  const id = STATE.pendingDeleteId;
+  if (id === null) return;
+  STATE.products = STATE.products.filter(p => p.id !== id);
+  STATE.pendingDeleteId = null;
+  saveData();
+  closeConfirm();
+  renderAdmin();
+  renderCatalog();
+  showToast('🗑️ Producto eliminado');
+}
+
+function closeConfirm() {
+  STATE.pendingDeleteId = null;
+  document.getElementById('confirm-overlay').classList.remove('open');
+}
+
+// ─────────────────────────────────────────
+// VIEW MANAGEMENT
+// ─────────────────────────────────────────
+function showView(view) {
+  // Hide all views
+  ['catalog', 'admin', 'login'].forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if (el) el.style.display = 'none';
+  });
+
+  STATE.currentView = view;
+
+  if (view === 'admin') {
+    if (!STATE.isLoggedIn) {
+      document.getElementById('view-login').style.display = 'block';
+      renderLogin();
+    } else {
+      document.getElementById('view-admin').style.display = 'block';
+      renderAdmin();
+    }
+  } else {
+    const el = document.getElementById('view-' + view);
+    if (el) el.style.display = 'block';
+    if (view === 'catalog') renderCatalog();
+  }
+
+  // Update tab states
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + view)?.classList.add('active');
+
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('bn-' + view)?.classList.add('active');
+}
+
+function goHome() { showView('catalog'); }
+
+// ─────────────────────────────────────────
+// SEARCH / FILTER / SORT
+// ─────────────────────────────────────────
+function onSearch(val) {
+  STATE.searchQ = val.toLowerCase();
+  renderCatalog();
+}
+
+function setFilter(f) {
+  STATE.activeFilter = f;
+  renderCatalog();
+  // Scroll filter chip into view
+  requestAnimationFrame(() => {
+    document.querySelector('.filter-chip.active')?.scrollIntoView({
+      behavior: 'smooth', block: 'nearest', inline: 'center'
+    });
+  });
+}
+
+function setSort(s) {
+  STATE.sortMode = s;
+  renderCatalog();
+}
+
+// ─────────────────────────────────────────
+// MODAL MANAGEMENT
+// ─────────────────────────────────────────
+function showModal(html) {
+  const ov = document.getElementById('modal-overlay');
+  ov.innerHTML = html;
+  ov.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const ov = document.getElementById('modal-overlay');
+  ov.classList.remove('open');
+  ov.innerHTML = '';
+  document.body.style.overflow = '';
+  STATE.editingId    = null;
+  STATE.photoDataURL = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) {
+    closeModal();
+  }
+}
+
+function stopBubble(e) { e.stopPropagation(); }
+
+// ─────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(STATE.toastTimer);
+  STATE.toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+// ─────────────────────────────────────────
+// THEME
+// ─────────────────────────────────────────
+function toggleTheme() {
+  STATE.lightMode = !STATE.lightMode;
+  document.documentElement.classList.toggle('light-mode', STATE.lightMode);
+  document.getElementById('theme-btn').textContent = STATE.lightMode ? '🌙' : '☀️';
+  try { localStorage.setItem('fp_theme', STATE.lightMode ? 'light' : 'dark'); } catch(e) {}
+}
+
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem('fp_theme');
+    if (saved === 'light') {
+      STATE.lightMode = true;
+      document.documentElement.classList.add('light-mode');
+      document.getElementById('theme-btn').textContent = '🌙';
+    }
+  } catch(e) {}
+}
+
+// ─────────────────────────────────────────
+// WHATSAPP / SHARE
+// ─────────────────────────────────────────
+function openWA() {
+  window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent('Hola! Quisiera información sobre sus productos.')}`, '_blank');
+}
+
+function contactProduct(name) {
+  const msg = `Hola! Me interesa el producto: ${name}. ¿Podría darme más información?`;
+  window.open(`https://wa.me/${CONFIG.WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function shareWA() {
+  const msg = `¡Mira el catálogo de Ferretería Parada! 🔧 ${window.location.href}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function shareFB() {
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+}
+
+function copyLink() {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => showToast('🔗 Enlace copiado!'))
+      .catch(() => fallbackCopy());
+  } else {
+    fallbackCopy();
+  }
+}
+
+function fallbackCopy() {
+  const el = document.createElement('textarea');
+  el.value = window.location.href;
+  el.style.position = 'fixed';
+  el.style.opacity = '0';
+  document.body.appendChild(el);
+  el.select();
+  try {
+    document.execCommand('copy');
+    showToast('🔗 Enlace copiado!');
+  } catch(e) {
+    showToast('❌ No se pudo copiar');
+  }
+  document.body.removeChild(el);
+}
+
+// ─────────────────────────────────────────
+// UTILITY
+// ─────────────────────────────────────────
+/** Escapa HTML para prevenir XSS */
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/** Escapa para uso dentro de string JS en atributos onclick */
+function escJs(str) {
+  if (!str) return '';
+  return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+// ─────────────────────────────────────────
+// KEYBOARD SHORTCUTS
+// ─────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    closeConfirm();
+  }
+});
+
+// Cerrar confirm al hacer clic fuera del box
+document.getElementById('confirm-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeConfirm();
+});
+
+// ─────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────
+(function init() {
+  loadData();
+  loadSession();
+  loadTheme();
+  renderCatalog();
+})();
+</script>
+</body>
+</html>
