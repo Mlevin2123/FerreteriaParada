@@ -1031,6 +1031,228 @@ input[type=number] { -moz-appearance: textfield; }
   .add-btn { width: 100%; justify-content: center; }
   .form-row { grid-template-columns: 1fr; }
 }
+
+/* ================================
+   PRODUCT CARD IMPROVEMENTS
+================================ */
+.product-thumb { aspect-ratio: 4/3; }
+
+.card-multi-img {
+  position: absolute; bottom: 7px; left: 7px;
+  font-size: 10px; color: #fff;
+  background: rgba(0,0,0,0.55);
+  padding: 2px 7px; border-radius: 99px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.p-desc {
+  font-size: 11px; color: var(--text-3);
+  line-height: 1.45; margin-bottom: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ================================
+   IMAGE GALLERY (product detail)
+================================ */
+.gallery-track {
+  position: relative;
+  width: 100%; height: 100%;
+}
+
+.gallery-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: zoom-in;
+}
+.gallery-img.active {
+  opacity: 1;
+  position: relative;
+}
+/* stack all imgs absolutely except active */
+.gallery-track .gallery-img:not(.active) {
+  position: absolute;
+}
+
+.gallery-dots {
+  position: absolute; bottom: 10px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 6px;
+  z-index: 5; pointer-events: none;
+}
+.gallery-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transition: all 0.2s ease;
+  pointer-events: all;
+  cursor: pointer;
+}
+.gallery-dot.active {
+  background: #fff;
+  transform: scale(1.2);
+}
+
+.gallery-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  z-index: 5;
+  background: rgba(0,0,0,0.45);
+  border: none; border-radius: 50%;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 20px; font-weight: 300;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
+  line-height: 1;
+}
+.gallery-arrow:hover { background: rgba(0,0,0,0.7); }
+.gallery-prev { left: 10px; }
+.gallery-next { right: 10px; }
+
+/* ================================
+   LIGHTBOX
+================================ */
+.lightbox-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.18s ease both;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.lightbox-inner {
+  position: relative;
+  max-width: min(96vw, 700px);
+  max-height: 92vh;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  user-select: none;
+}
+
+.lightbox-close {
+  position: fixed; top: 16px; right: 16px;
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.15);
+  border: none; border-radius: 50%;
+  color: #fff; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10;
+  transition: background 0.2s;
+}
+.lightbox-close:hover { background: rgba(239,68,68,0.7); }
+
+.lightbox-arrow {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: none; border-radius: 50%;
+  width: 44px; height: 44px;
+  color: #fff; font-size: 24px; font-weight: 300;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.lightbox-arrow:hover { background: rgba(255,255,255,0.25); }
+.lightbox-prev { left: 12px; }
+.lightbox-next { right: 12px; }
+
+.lightbox-counter {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.7);
+  font-size: 13px; font-weight: 500;
+  background: rgba(0,0,0,0.4);
+  padding: 4px 14px; border-radius: 99px;
+  backdrop-filter: blur(4px);
+}
+
+/* ================================
+   ADMIN — MULTI-IMAGE LIST
+================================ */
+.img-list {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 10px;
+  min-height: 80px;
+}
+
+.img-item {
+  position: relative;
+  width: 80px; height: 80px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.img-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.img-del-btn {
+  position: absolute; top: 3px; right: 3px;
+  width: 20px; height: 20px;
+  background: rgba(0,0,0,0.65);
+  border: none; border-radius: 50%;
+  color: #fff; font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.2s;
+  line-height: 1;
+}
+.img-del-btn:hover { background: rgba(239,68,68,0.85); }
+
+.img-main-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(249,115,22,0.85);
+  color: #fff; font-size: 9px; font-weight: 700;
+  text-align: center; padding: 2px 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.img-add-slot {
+  width: 80px; height: 80px;
+  border-radius: var(--radius-md);
+  border: 2px dashed var(--border-light);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: var(--transition);
+  background: transparent;
+}
+.img-add-slot:hover { border-color: var(--orange); background: var(--orange-dim); }
+.img-add-icon { font-size: 22px; color: var(--text-3); line-height: 1; }
+.img-add-text { font-size: 10px; color: var(--text-3); font-weight: 500; }
+
+/* admin thumb multi-count badge */
+.admin-thumb { position: relative; }
+.admin-thumb-count {
+  position: absolute; bottom: -4px; right: -4px;
+  background: var(--orange);
+  color: #fff; font-size: 9px; font-weight: 700;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--bg);
+}
+
+/* Cat emoji input sizing */
+.cat-emoji-input { max-width: 100px !important; flex: none !important; }
 </style>
 </head>
 <body>
@@ -1183,7 +1405,6 @@ const WA_NUMBER      = "50372899264";
 const ADMIN_PASSWORD = "admin123";
 const STORE_NAME     = "Ferretería Parada";
 
-// Categorías predeterminadas
 const DEFAULT_CATEGORIES = [
   { name: 'Herramientas', emoji: '🔨' },
   { name: 'Electricidad',  emoji: '⚡' },
@@ -1197,152 +1418,25 @@ const DEFAULT_CATEGORIES = [
   { name: 'General',       emoji: '📦' },
 ];
 
-// Productos de ejemplo (imágenes de Unsplash — sin API key requerida)
 const SAMPLE_PRODUCTS = [
-  {
-    name: 'Taladro Percutor 750W',
-    category: 'Herramientas', brand: 'Bosch',
-    price: 85.00,
-    description: 'Taladro percutor profesional 750W con mandril de 13mm. Ideal para perforar concreto, madera y metal con precisión.',
-    imageUrl: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&fit=crop&auto=format',
-    isNew: true, isOffer: false, views: 14,
-  },
-  {
-    name: 'Martillo de Acero 16 oz',
-    category: 'Herramientas', brand: 'Stanley',
-    price: 12.50,
-    description: 'Martillo de carpintero con mango de fibra de vidrio antivibración y cabeza de acero templado. Agarre cómodo.',
-    imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: true, views: 31,
-  },
-  {
-    name: 'Sierra Circular 7-1/4"',
-    category: 'Herramientas', brand: 'DeWalt',
-    price: 110.00,
-    description: 'Sierra circular de 1200W con disco de carburo de 24 dientes. Cortes precisos en madera y derivados.',
-    imageUrl: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&fit=crop&auto=format',
-    isNew: true, isOffer: false, views: 9,
-  },
-  {
-    name: 'Kit Destornilladores x12',
-    category: 'Herramientas', brand: 'Irwin',
-    price: 24.99,
-    description: 'Juego de 12 destornilladores de punta plana y Phillips con mangos ergonómicos antideslizantes de doble componente.',
-    imageUrl: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: true, views: 22,
-  },
-  {
-    name: 'Pala Punta de Acero',
-    category: 'Construcción', brand: 'Corona',
-    price: 18.75,
-    description: 'Pala de punta en acero forjado con mango de madera de 1.20m. Resistente para trabajo pesado en terrenos duros.',
-    imageUrl: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 7,
-  },
-  {
-    name: 'Cinta Métrica 8m Pro',
-    category: 'Herramientas', brand: 'Stanley',
-    price: 8.50,
-    description: 'Cinta métrica de acero con recubrimiento nylon. Gancho magnético, freno automático y cuerpo ergonómico.',
-    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 18,
-  },
-  {
-    name: 'Llave Ajustable 10"',
-    category: 'Herramientas', brand: 'Bahco',
-    price: 15.00,
-    description: 'Llave inglesa de 10 pulgadas con mandíbulas cromadas. Apertura máxima 32mm. Acero cromo vanadio.',
-    imageUrl: 'https://images.unsplash.com/photo-1581235720704-06d3acfbe0a7?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 11,
-  },
-  {
-    name: 'Cable Eléctrico 2.5mm x10m',
-    category: 'Electricidad', brand: 'Phelps Dodge',
-    price: 14.50,
-    description: 'Rollo de cable THW 2.5mm² de 10 metros. Resistente a la temperatura y humedad. Ideal para instalaciones residenciales.',
-    imageUrl: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 5,
-  },
-  {
-    name: 'Panel LED 18W',
-    category: 'Electricidad', brand: 'Philips',
-    price: 12.99,
-    description: 'Panel LED empotrable 18W, luz fría 6500K, 1600 lúmenes. Bajo consumo y larga vida útil de 25000 horas.',
-    imageUrl: 'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=600&fit=crop&auto=format',
-    isNew: true, isOffer: false, views: 16,
-  },
-  {
-    name: 'Pintura Látex Blanca 1 gal',
-    category: 'Pintura', brand: 'Lanco',
-    price: 18.00,
-    description: 'Pintura látex interior/exterior alto rendimiento. Blanco hueso. Cubre hasta 30m² por galón. Lavable y sin olor.',
-    imageUrl: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: true, views: 25,
-  },
-  {
-    name: 'Guantes de Cuero Pro',
-    category: 'Seguridad', brand: '3M',
-    price: 6.25,
-    description: 'Guantes de cuero natural con forro de algodón. Protección contra cortes y abrasión en trabajos pesados.',
-    imageUrl: 'https://images.unsplash.com/photo-1607166452427-7e4477079cb9?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 8,
-  },
-  {
-    name: 'Casco de Seguridad',
-    category: 'Seguridad', brand: 'MSA',
-    price: 14.99,
-    description: 'Casco de seguridad industrial tipo I. Polietileno de alta densidad, suspensión ajustable. Certificado ANSI Z89.1.',
-    imageUrl: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 4,
-  },
-  {
-    name: 'Llave de Paso 1/2"',
-    category: 'Plomería', brand: 'Nibco',
-    price: 8.75,
-    description: 'Llave de bola 1/2 pulgada en latón cromado. Cierre hermético de 1/4 de vuelta. Presión máx 150 PSI.',
-    imageUrl: 'https://images.unsplash.com/photo-1606166187734-a4cb74079037?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 3,
-  },
-  {
-    name: 'Rodillo de Pintura 23cm',
-    category: 'Pintura', brand: 'Purdy',
-    price: 9.50,
-    description: 'Rodillo de lana sintética 23cm para pintura látex y esmalte. Mango ergonómico de aluminio. Acabado perfecto.',
-    imageUrl: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 13,
-  },
-  {
-    name: 'Clavos Acero 2.5" x 500g',
-    category: 'Fijaciones', brand: 'Genérico',
-    price: 2.99,
-    description: 'Bolsa de 500g de clavos comunes de acero 2.5 pulgadas. Ideales para carpintería, construcción y cercos.',
-    imageUrl: 'https://images.unsplash.com/photo-1584715642381-ba43f49e28ed?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: true, views: 29,
-  },
-  {
-    name: 'Manguera de Jardín 15m',
-    category: 'Jardín', brand: 'Truper',
-    price: 12.00,
-    description: 'Manguera de jardín tricapa 15m, diámetro 5/8". Resistente a UV y cloro. Incluye pistola de riego 7 funciones.',
-    imageUrl: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&fit=crop&auto=format',
-    isNew: true, isOffer: false, views: 6,
-  },
-  {
-    name: 'Amoladora Angular 4-1/2"',
-    category: 'Herramientas', brand: 'Makita',
-    price: 62.00,
-    description: 'Amoladora angular 720W, 11000 RPM. Incluye disco de desbaste y llave de ajuste. Protector regulable.',
-    imageUrl: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 20,
-  },
-  {
-    name: 'Nivel de Burbuja 60cm',
-    category: 'Construcción', brand: 'Stabila',
-    price: 22.00,
-    description: 'Nivel de aluminio 60cm con 3 burbujas: horizontal, vertical y 45°. Cuerpo de perfil reforzado anti-impacto.',
-    imageUrl: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&fit=crop&auto=format',
-    isNew: false, isOffer: false, views: 10,
-  },
+  { name:'Taladro Percutor 750W',     category:'Herramientas', brand:'Bosch',        price:85.00,  description:'Taladro percutor profesional 750W con mandril de 13mm. Ideal para perforar concreto, madera y metal.',        images:['https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&fit=crop&auto=format'], isNew:true,  isOffer:false, views:14 },
+  { name:'Martillo de Acero 16 oz',   category:'Herramientas', brand:'Stanley',      price:12.50,  description:'Martillo de carpintero con mango de fibra de vidrio antivibración y cabeza de acero templado.',             images:['https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&fit=crop&auto=format'], isNew:false, isOffer:true,  views:31 },
+  { name:'Sierra Circular 7-1/4"',    category:'Herramientas', brand:'DeWalt',       price:110.00, description:'Sierra circular de 1200W con disco de carburo de 24 dientes. Cortes precisos en madera y derivados.',       images:['https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&fit=crop&auto=format'], isNew:true,  isOffer:false, views:9  },
+  { name:'Kit Destornilladores x12',  category:'Herramientas', brand:'Irwin',        price:24.99,  description:'Juego de 12 destornilladores de punta plana y Phillips con mangos ergonómicos antideslizantes.',            images:['https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&fit=crop&auto=format'], isNew:false, isOffer:true,  views:22 },
+  { name:'Pala Punta de Acero',       category:'Construcción', brand:'Corona',       price:18.75,  description:'Pala de punta en acero forjado con mango de madera de 1.20m. Resistente para trabajo pesado.',             images:['https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:7  },
+  { name:'Cinta Métrica 8m Pro',      category:'Herramientas', brand:'Stanley',      price:8.50,   description:'Cinta métrica de acero con recubrimiento nylon. Gancho magnético, freno automático y cuerpo ergonómico.',  images:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:18 },
+  { name:'Llave Ajustable 10"',       category:'Herramientas', brand:'Bahco',        price:15.00,  description:'Llave inglesa de 10 pulgadas con mandíbulas cromadas. Apertura máxima 32mm. Acero cromo vanadio.',          images:['https://images.unsplash.com/photo-1581235720704-06d3acfbe0a7?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:11 },
+  { name:'Cable Eléctrico 2.5mm x10m',category:'Electricidad', brand:'Phelps Dodge', price:14.50,  description:'Rollo de cable THW 2.5mm² de 10 metros. Resistente a la temperatura y humedad.',                         images:['https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:5  },
+  { name:'Panel LED 18W',             category:'Electricidad', brand:'Philips',      price:12.99,  description:'Panel LED empotrable 18W, luz fría 6500K, 1600 lúmenes. Bajo consumo, larga vida útil de 25000 horas.',   images:['https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=600&fit=crop&auto=format'], isNew:true,  isOffer:false, views:16 },
+  { name:'Pintura Látex Blanca 1 gal',category:'Pintura',      brand:'Lanco',        price:18.00,  description:'Pintura látex interior/exterior alto rendimiento. Blanco hueso. Cubre hasta 30m² por galón.',              images:['https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&fit=crop&auto=format'], isNew:false, isOffer:true,  views:25 },
+  { name:'Guantes de Cuero Pro',      category:'Seguridad',    brand:'3M',           price:6.25,   description:'Guantes de cuero natural con forro de algodón. Protección contra cortes y abrasión en trabajos pesados.',  images:['https://images.unsplash.com/photo-1607166452427-7e4477079cb9?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:8  },
+  { name:'Casco de Seguridad',        category:'Seguridad',    brand:'MSA',          price:14.99,  description:'Casco de seguridad industrial tipo I. Polietileno alta densidad, suspensión ajustable. Certificado ANSI.',  images:['https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:4  },
+  { name:'Llave de Paso 1/2"',        category:'Plomería',     brand:'Nibco',        price:8.75,   description:'Llave de bola 1/2 pulgada en latón cromado. Cierre hermético de 1/4 de vuelta. Presión máx 150 PSI.',     images:['https://images.unsplash.com/photo-1606166187734-a4cb74079037?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:3  },
+  { name:'Rodillo de Pintura 23cm',   category:'Pintura',      brand:'Purdy',        price:9.50,   description:'Rodillo de lana sintética 23cm para pintura látex y esmalte. Mango ergonómico de aluminio.',              images:['https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:13 },
+  { name:'Clavos Acero 2.5" x 500g', category:'Fijaciones',   brand:'Genérico',     price:2.99,   description:'Bolsa de 500g de clavos comunes de acero 2.5 pulgadas. Ideales para carpintería y construcción.',          images:['https://images.unsplash.com/photo-1584715642381-ba43f49e28ed?w=600&fit=crop&auto=format'], isNew:false, isOffer:true,  views:29 },
+  { name:'Manguera de Jardín 15m',    category:'Jardín',       brand:'Truper',       price:12.00,  description:'Manguera de jardín tricapa 15m, diámetro 5/8". Resistente a UV y cloro. Incluye pistola de riego.',        images:['https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&fit=crop&auto=format'], isNew:true,  isOffer:false, views:6  },
+  { name:'Amoladora Angular 4-1/2"',  category:'Herramientas', brand:'Makita',       price:62.00,  description:'Amoladora angular 720W, 11000 RPM. Incluye disco de desbaste y llave de ajuste.',                         images:['https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:20 },
+  { name:'Nivel de Burbuja 60cm',     category:'Construcción', brand:'Stabila',      price:22.00,  description:'Nivel de aluminio 60cm con 3 burbujas: horizontal, vertical y 45°. Cuerpo anti-impacto.',                 images:['https://images.unsplash.com/photo-1504148455328-c376907d081c?w=600&fit=crop&auto=format'], isNew:false, isOffer:false, views:10 },
 ];
 
 // ============================================================
@@ -1363,25 +1457,27 @@ try {
 // STATE
 // ============================================================
 const STATE = {
-  products:        [],
-  categories:      [],
-  isLoggedIn:      false,
-  lightMode:       false,
-  currentView:     'catalog',
-  activeFilter:    'all',
-  sortMode:        'newest',
-  searchQ:         '',
-  priceMin:        '',
-  priceMax:        '',
-  editingId:       null,
-  pendingDeleteId: null,
+  products:          [],
+  categories:        [],
+  isLoggedIn:        false,
+  lightMode:         false,
+  currentView:       'catalog',
+  activeFilter:      'all',
+  sortMode:          'newest',
+  searchQ:           '',
+  priceMin:          '',
+  priceMax:          '',
+  editingId:         null,
+  pendingDeleteId:   null,
   pendingDeleteType: 'product',
-  uploadedImgUrl:  null,
-  tagNew:          false,
-  tagOffer:        false,
-  toastTimer:      null,
-  adminSearchQ:    '',
-  adminTab:        'products',
+  uploadedImages:    [],          // array of Cloudinary URLs
+  galleryImages:     [],          // images currently shown in detail modal
+  galleryIndex:      0,
+  tagNew:            false,
+  tagOffer:          false,
+  toastTimer:        null,
+  adminSearchQ:      '',
+  adminTab:          'products',
 };
 
 // ============================================================
@@ -1400,9 +1496,19 @@ function formatPrice(price) {
   return new Intl.NumberFormat('es-SV', { style: 'currency', currency: 'USD' }).format(price);
 }
 
+function getCatInfo(catName) {
+  return STATE.categories.find(c => c.name === catName) || { emoji: '', name: catName };
+}
+
 function getEmoji(catName) {
-  const found = STATE.categories.find(c => c.name === catName);
-  return found?.emoji || '📦';
+  return getCatInfo(catName).emoji || '';
+}
+
+/** Returns a normalized images array for a product (supports old imageUrl field too) */
+function getProductImages(p) {
+  if (p.images && p.images.length > 0) return p.images;
+  if (p.imageUrl) return [p.imageUrl];
+  return [];
 }
 
 function showToast(msg) {
@@ -1430,7 +1536,9 @@ function closeModal() {
   ov.innerHTML = '';
   document.body.style.overflow = '';
   STATE.editingId      = null;
-  STATE.uploadedImgUrl = null;
+  STATE.uploadedImages = [];
+  STATE.galleryImages  = [];
+  STATE.galleryIndex   = 0;
   STATE.tagNew         = false;
   STATE.tagOffer       = false;
 }
@@ -1463,16 +1571,16 @@ document.getElementById('themeBtnTop').addEventListener('click', () => {
 // CATEGORIES BAR (catalog)
 // ============================================================
 function rebuildCategories() {
-  // Build chip list from products actually present
   const usedCats = [...new Set(STATE.products.map(p => p.category).filter(Boolean).sort())];
   const cats = ['all', ...usedCats];
   const list = document.getElementById('categoriesList');
   if (!list) return;
 
-  list.innerHTML = cats.map(c => `
-    <button class="chip ${c === STATE.activeFilter ? 'active' : ''}" data-cat="${esc(c)}">
-      ${c === 'all' ? 'Todos' : esc(c)}
-    </button>`).join('');
+  list.innerHTML = cats.map(c => {
+    const info = c === 'all' ? { emoji: '🏪', name: 'Todos' } : getCatInfo(c);
+    const label = info.emoji ? `${info.emoji} ${esc(info.name || c)}` : esc(info.name || c);
+    return `<button class="chip ${c === STATE.activeFilter ? 'active' : ''}" data-cat="${esc(c)}">${label}</button>`;
+  }).join('');
 
   list.querySelectorAll('.chip').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1500,11 +1608,6 @@ function getFiltered() {
       (p.description || '').toLowerCase().includes(q)
     );
   }
-  const minVal = STATE.priceMin !== '' ? parseFloat(STATE.priceMin) : null;
-  const maxVal = STATE.priceMax !== '' ? parseFloat(STATE.priceMax) : null;
-  if (minVal !== null) list = list.filter(p => p.price != null && p.price >= minVal);
-  if (maxVal !== null) list = list.filter(p => p.price != null && p.price <= maxVal);
-
   switch (STATE.sortMode) {
     case 'price-asc':  list.sort((a,b) => (a.price ?? Infinity) - (b.price ?? Infinity)); break;
     case 'price-desc': list.sort((a,b) => (b.price ?? -Infinity) - (a.price ?? -Infinity)); break;
@@ -1517,12 +1620,6 @@ function getFiltered() {
       });
   }
   return list;
-}
-
-function updatePriceClearBtn() {
-  const btn = document.getElementById('clearPriceBtn');
-  if (!btn) return;
-  btn.style.display = (STATE.priceMin !== '' || STATE.priceMax !== '') ? 'flex' : 'none';
 }
 
 function renderCatalog() {
@@ -1545,10 +1642,15 @@ function renderCatalog() {
   if (empty) empty.style.display = 'none';
 
   grid.innerHTML = list.map((p, i) => {
-    const price   = formatPrice(p.price);
-    const emoji   = getEmoji(p.category);
-    const imgHtml = p.imageUrl
-      ? `<img src="${esc(p.imageUrl)}" alt="${esc(p.name)}" loading="lazy"
+    const price    = formatPrice(p.price);
+    const info     = getCatInfo(p.category);
+    const imgs     = getProductImages(p);
+    const imgUrl   = imgs[0];
+    const hasImg   = !!imgUrl;
+    const multiImg = imgs.length > 1;
+
+    const imgHtml = hasImg
+      ? `<img src="${esc(imgUrl)}" alt="${esc(p.name)}" loading="lazy"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
       : '';
 
@@ -1556,17 +1658,19 @@ function renderCatalog() {
     <div class="product-card" data-id="${p.id}" style="animation-delay:${i * 0.04}s">
       <div class="product-thumb">
         ${imgHtml}
-        <div class="thumb-placeholder" ${p.imageUrl ? 'style="display:none"' : ''}>${emoji}</div>
+        <div class="thumb-placeholder" ${hasImg ? 'style="display:none"' : ''}>${info.emoji || '📦'}</div>
         <div class="card-badges">
           ${p.isNew   ? '<span class="badge badge-new">NUEVO</span>'  : ''}
           ${p.isOffer ? '<span class="badge badge-offer">OFERTA</span>' : ''}
         </div>
+        ${multiImg ? `<div class="card-multi-img">📷 ${imgs.length}</div>` : ''}
         <div class="card-views">👁 ${p.views || 0}</div>
       </div>
       <div class="product-info">
-        ${p.category ? `<div class="p-category">${esc(p.category)}</div>` : ''}
+        ${p.category ? `<div class="p-category">${info.emoji ? info.emoji + ' ' : ''}${esc(p.category)}</div>` : ''}
         <div class="p-name">${esc(p.name)}</div>
         ${p.brand ? `<div class="p-brand">${esc(p.brand)}</div>` : ''}
+        ${p.description ? `<div class="p-desc">${esc(p.description)}</div>` : ''}
         <div class="p-price ${price ? '' : 'no-price'}">${price ?? 'Consultar precio'}</div>
       </div>
     </div>`;
@@ -1578,28 +1682,51 @@ function renderCatalog() {
 }
 
 // ============================================================
-// PRODUCT DETAIL
+// PRODUCT DETAIL — GALLERY
 // ============================================================
 function openProductDetail(id) {
   const p = STATE.products.find(x => x.id === id);
   if (!p) return;
 
-  const price   = formatPrice(p.price);
-  const emoji   = getEmoji(p.category);
-  const imgHtml = p.imageUrl
-    ? `<img src="${esc(p.imageUrl)}" alt="${esc(p.name)}">`
-    : `<div class="detail-img-emoji">${emoji}</div>`;
+  const imgs  = getProductImages(p);
+  const info  = getCatInfo(p.category);
+  const price = formatPrice(p.price);
+
+  STATE.galleryImages = imgs;
+  STATE.galleryIndex  = 0;
+
+  function buildGallery() {
+    if (imgs.length === 0) {
+      return `<div class="detail-img-emoji">${info.emoji || '📦'}</div>`;
+    }
+    const track = imgs.map((url, i) =>
+      `<img class="gallery-img${i === 0 ? ' active' : ''}" src="${esc(url)}" alt="${esc(p.name)}" data-idx="${i}" loading="lazy">`
+    ).join('');
+
+    const dots = imgs.length > 1
+      ? `<div class="gallery-dots">${imgs.map((_,i) =>
+          `<span class="gallery-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></span>`
+        ).join('')}</div>`
+      : '';
+
+    const arrows = imgs.length > 1
+      ? `<button class="gallery-arrow gallery-prev" id="galleryPrev">‹</button>
+         <button class="gallery-arrow gallery-next" id="galleryNext">›</button>`
+      : '';
+
+    return `<div class="gallery-track" id="galleryTrack">${track}</div>${dots}${arrows}`;
+  }
 
   showModal(`
     <div class="detail-modal-wrap" id="detailWrap">
       <div style="position:relative">
-        <div class="detail-img-wrap">
-          ${imgHtml}
+        <div class="detail-img-wrap" id="galleryWrap">
+          ${buildGallery()}
           <button class="detail-close" id="detailCloseBtn">✕</button>
         </div>
       </div>
       <div class="detail-info">
-        ${p.category ? `<span class="detail-cat">${esc(p.category)}</span>` : ''}
+        ${p.category ? `<span class="detail-cat">${info.emoji ? info.emoji + ' ' : ''}${esc(p.category)}</span>` : ''}
         <div class="detail-name">${esc(p.name)}</div>
         ${p.brand ? `<div class="detail-brand">Marca: <strong>${esc(p.brand)}</strong></div>` : ''}
         <div class="detail-price ${price ? '' : 'no-price'}">${price ?? 'Consultar precio'}</div>
@@ -1609,10 +1736,44 @@ function openProductDetail(id) {
       </div>
     </div>`);
 
+  // ── Gallery navigation ──────────────────────────────────
+  function goTo(idx) {
+    const allImgs = document.querySelectorAll('.gallery-img');
+    const allDots = document.querySelectorAll('.gallery-dot');
+    STATE.galleryIndex = ((idx % imgs.length) + imgs.length) % imgs.length;
+    allImgs.forEach((el, i) => el.classList.toggle('active', i === STATE.galleryIndex));
+    allDots.forEach((el, i) => el.classList.toggle('active', i === STATE.galleryIndex));
+  }
+
+  document.getElementById('galleryPrev')?.addEventListener('click', e => { e.stopPropagation(); goTo(STATE.galleryIndex - 1); });
+  document.getElementById('galleryNext')?.addEventListener('click', e => { e.stopPropagation(); goTo(STATE.galleryIndex + 1); });
+
+  document.querySelectorAll('.gallery-dot').forEach(dot => {
+    dot.addEventListener('click', e => { e.stopPropagation(); goTo(parseInt(dot.dataset.idx)); });
+  });
+
+  // Tap on image → lightbox
+  document.querySelectorAll('.gallery-img').forEach(img => {
+    img.addEventListener('click', e => {
+      e.stopPropagation();
+      openLightbox(imgs, STATE.galleryIndex);
+    });
+  });
+
+  // Swipe support
+  const gwrap = document.getElementById('galleryWrap');
+  let swipeX = 0;
+  gwrap?.addEventListener('touchstart', e => { swipeX = e.touches[0].clientX; }, { passive: true });
+  gwrap?.addEventListener('touchend', e => {
+    const diff = swipeX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 44) goTo(STATE.galleryIndex + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+
+  // ── Events ─────────────────────────────────────────────
   document.getElementById('detailCloseBtn').addEventListener('click', closeModal);
   document.getElementById('detailWrap').addEventListener('click', e => e.stopPropagation());
 
-  const waMsg = `Hola ${STORE_NAME}, me interesa obtener más información sobre el producto: ${p.name}.`;
+  const waMsg = `Hola ${STORE_NAME}, me interesa obtener más información sobre: *${p.name}*.`;
   document.getElementById('waContactBtn').addEventListener('click', () => {
     window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
   });
@@ -1620,6 +1781,50 @@ function openProductDetail(id) {
   if (firebaseReady) {
     updateDoc(doc(db, 'products', id), { views: increment(1) }).catch(() => {});
   }
+}
+
+// ============================================================
+// LIGHTBOX (fullscreen image viewer)
+// ============================================================
+function openLightbox(images, startIdx) {
+  let idx = startIdx;
+  const lb = document.createElement('div');
+  lb.className = 'lightbox-overlay';
+
+  function render() {
+    lb.innerHTML = `
+      <div class="lightbox-inner" id="lbInner">
+        <button class="lightbox-close" id="lbClose">✕</button>
+        <img class="lightbox-img" src="${esc(images[idx])}" alt="" id="lbImg">
+        ${images.length > 1 ? `
+          <button class="lightbox-arrow lightbox-prev" id="lbPrev">‹</button>
+          <button class="lightbox-arrow lightbox-next" id="lbNext">›</button>
+          <div class="lightbox-counter">${idx + 1} / ${images.length}</div>` : ''}
+      </div>`;
+    bindLb();
+  }
+
+  function bindLb() {
+    document.getElementById('lbClose').addEventListener('click', destroy);
+    document.getElementById('lbPrev')?.addEventListener('click', e => { e.stopPropagation(); idx = (idx - 1 + images.length) % images.length; render(); });
+    document.getElementById('lbNext')?.addEventListener('click', e => { e.stopPropagation(); idx = (idx + 1) % images.length; render(); });
+    document.getElementById('lbInner').addEventListener('click', e => e.stopPropagation());
+
+    let sx = 0;
+    lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      const d = sx - e.changedTouches[0].clientX;
+      if (Math.abs(d) > 44) { idx = (idx + (d > 0 ? 1 : -1) + images.length) % images.length; render(); }
+    }, { passive: true });
+  }
+
+  function destroy() {
+    document.body.removeChild(lb);
+  }
+
+  lb.addEventListener('click', destroy);
+  document.body.appendChild(lb);
+  render();
 }
 
 // ============================================================
@@ -1746,7 +1951,6 @@ function renderAdmin() {
       <div class="spacer-bottom"></div>
     </div>`;
 
-  // Tab switching
   el.querySelectorAll('.admin-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       STATE.adminTab = btn.dataset.atab;
@@ -1794,10 +1998,14 @@ function renderProductsTab(container) {
            <div class="empty-title">Sin productos</div>
            <div class="empty-sub">Agrega el primer producto con el botón de arriba</div>
          </div>`
-      : filtered.map(p => `
+      : filtered.map(p => {
+          const imgs  = getProductImages(p);
+          const thumb = imgs[0];
+          return `
           <div class="admin-product-item">
             <div class="admin-thumb">
-              ${p.imageUrl ? `<img src="${esc(p.imageUrl)}" alt="">` : getEmoji(p.category)}
+              ${thumb ? `<img src="${esc(thumb)}" alt="">` : (getCatInfo(p.category).emoji || '📦')}
+              ${imgs.length > 1 ? `<div class="admin-thumb-count">${imgs.length}</div>` : ''}
             </div>
             <div class="admin-product-info">
               <div class="admin-product-name">${esc(p.name)}</div>
@@ -1815,7 +2023,8 @@ function renderProductsTab(container) {
               <button class="action-btn edit-btn" data-edit="${p.id}">✏️</button>
               <button class="action-btn del-btn"  data-del="${p.id}">🗑️</button>
             </div>
-          </div>`).join('')
+          </div>`;
+        }).join('')
     }`;
 
   container.querySelector('#adminSearchInput')?.addEventListener('input', e => {
@@ -1842,14 +2051,14 @@ function renderCategoriesTab(container) {
       <div class="cat-add-row">
         <input id="catNameInput" class="cat-input" type="text"
                placeholder="Nueva categoría (ej: Impermeabilización)" maxlength="40">
-        <input id="catEmojiInput" class="cat-input" type="text"
-               placeholder="Emoji" maxlength="4" style="max-width:80px">
+        <input id="catEmojiInput" class="cat-input cat-emoji-input" type="text"
+               placeholder="Emoji (opcional)" maxlength="4">
         <button class="cat-add-btn" id="catAddBtn">＋ Agregar</button>
       </div>
       <div class="cat-list" id="catList">
         ${STATE.categories.map(c => `
           <div class="cat-tag" data-cat-id="${esc(c.id)}">
-            <span>${c.emoji || '📦'} ${esc(c.name)}</span>
+            <span>${c.emoji ? c.emoji + ' ' : ''}${esc(c.name)}</span>
             <button class="cat-tag-del" data-cat-id="${esc(c.id)}" title="Eliminar">✕</button>
           </div>`).join('')}
       </div>
@@ -1871,7 +2080,7 @@ async function addCategory() {
   const nameEl  = document.getElementById('catNameInput');
   const emojiEl = document.getElementById('catEmojiInput');
   const name    = (nameEl?.value || '').trim();
-  const emoji   = (emojiEl?.value || '').trim() || '📦';
+  const emoji   = (emojiEl?.value || '').trim(); // truly optional — no default
 
   if (!name) { showToast('⚠️ Escribe el nombre de la categoría'); nameEl?.focus(); return; }
   if (STATE.categories.some(c => c.name.toLowerCase() === name.toLowerCase())) {
@@ -1900,23 +2109,24 @@ async function deleteCategory(id) {
 }
 
 // ============================================================
-// PRODUCT MODAL
+// PRODUCT MODAL (with multi-image support)
 // ============================================================
 function openProductModal(id = null) {
-  STATE.editingId      = id;
-  STATE.uploadedImgUrl = null;
-  STATE.tagNew         = false;
-  STATE.tagOffer       = false;
+  STATE.editingId  = id;
+  STATE.tagNew     = false;
+  STATE.tagOffer   = false;
 
   const p = id ? STATE.products.find(x => x.id === id) : null;
   if (p) {
-    STATE.uploadedImgUrl = p.imageUrl || null;
+    STATE.uploadedImages = getProductImages(p).slice(); // copy
     STATE.tagNew         = !!p.isNew;
     STATE.tagOffer       = !!p.isOffer;
+  } else {
+    STATE.uploadedImages = [];
   }
 
   const catOptions = STATE.categories.map(c =>
-    `<option value="${esc(c.name)}" ${p && p.category === c.name ? 'selected' : ''}>${esc(c.name)}</option>`
+    `<option value="${esc(c.name)}" ${p && p.category === c.name ? 'selected' : ''}>${c.emoji ? c.emoji + ' ' : ''}${esc(c.name)}</option>`
   ).join('');
 
   showModal(`
@@ -1927,14 +2137,8 @@ function openProductModal(id = null) {
         <button class="close-btn" id="formCloseBtn">✕</button>
       </div>
 
-      <img id="photoPreview" class="photo-preview-img ${p?.imageUrl ? 'show' : ''}"
-           src="${p?.imageUrl ? esc(p.imageUrl) : ''}" alt="Vista previa">
-      <div class="photo-upload-area" id="photoUploadArea" ${p?.imageUrl ? 'style="display:none"' : ''}>
-        <input type="file" id="imgFile" accept="image/*">
-        <span class="upload-icon">📷</span>
-        <div class="upload-text">Tomar foto o elegir imagen</div>
-        <div class="upload-sub">JPG, PNG, WEBP · máx 5MB</div>
-      </div>
+      <label class="form-label" style="margin-bottom:8px">Imágenes del producto <span style="color:var(--text-3);font-weight:400">(máx. 5)</span></label>
+      <div id="imgListWrap" class="img-list"></div>
       <div class="upload-status" id="uploadStatus"></div>
 
       <div class="form-group">
@@ -1980,6 +2184,8 @@ function openProductModal(id = null) {
       <button class="save-btn" id="saveProductBtn">💾 Guardar producto</button>
     </div>`);
 
+  refreshImgList();
+
   document.getElementById('productFormWrap').addEventListener('click', e => e.stopPropagation());
   document.getElementById('formCloseBtn').addEventListener('click', closeModal);
   document.getElementById('toggleNew').addEventListener('click', () => {
@@ -1990,28 +2196,57 @@ function openProductModal(id = null) {
     STATE.tagOffer = !STATE.tagOffer;
     document.getElementById('toggleOffer').classList.toggle('active-offer', STATE.tagOffer);
   });
-  document.getElementById('imgFile').addEventListener('change', handleImageUpload);
   document.getElementById('saveProductBtn').addEventListener('click', saveProduct);
   setTimeout(() => document.getElementById('fName')?.focus(), 80);
 }
 
 // ============================================================
-// IMAGE UPLOAD
+// IMAGE LIST MANAGEMENT
+// ============================================================
+function refreshImgList() {
+  const wrap = document.getElementById('imgListWrap');
+  if (!wrap) return;
+
+  const canAdd = STATE.uploadedImages.length < 5;
+
+  wrap.innerHTML =
+    STATE.uploadedImages.map((url, i) => `
+      <div class="img-item">
+        <img src="${esc(url)}" alt="imagen ${i+1}">
+        <button class="img-del-btn" data-idx="${i}" title="Eliminar imagen">✕</button>
+        ${i === 0 ? '<div class="img-main-label">Principal</div>' : ''}
+      </div>`).join('') +
+    (canAdd ? `
+      <div class="img-add-slot" id="addImgSlot">
+        <input type="file" id="imgFile" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%">
+        <span class="img-add-icon">＋</span>
+        <span class="img-add-text">Agregar</span>
+      </div>` : '');
+
+  bindImgListEvents();
+}
+
+function bindImgListEvents() {
+  document.getElementById('imgFile')?.addEventListener('change', handleImageUpload);
+  document.querySelectorAll('.img-del-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      STATE.uploadedImages.splice(idx, 1);
+      refreshImgList();
+      setUploadStatus('', '');
+    });
+  });
+}
+
+// ============================================================
+// IMAGE UPLOAD (Cloudinary)
 // ============================================================
 async function handleImageUpload(e) {
   const file = e.target.files?.[0];
   if (!file) return;
 
   if (file.size > 5 * 1024 * 1024) { showToast('⚠️ Imagen muy grande (máx 5MB)'); return; }
-
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const prev = document.getElementById('photoPreview');
-    const area = document.getElementById('photoUploadArea');
-    if (prev) { prev.src = ev.target.result; prev.classList.add('show'); }
-    if (area) area.style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+  if (STATE.uploadedImages.length >= 5) { showToast('⚠️ Máximo 5 imágenes por producto'); return; }
 
   setUploadStatus('Subiendo imagen…', 'uploading');
 
@@ -2023,16 +2258,16 @@ async function handleImageUpload(e) {
     const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: fd });
     const data = await res.json();
     if (data.secure_url) {
-      STATE.uploadedImgUrl = data.secure_url;
-      setUploadStatus('✓ Imagen subida correctamente', 'done');
+      STATE.uploadedImages.push(data.secure_url);
+      setUploadStatus(`✓ Imagen ${STATE.uploadedImages.length} subida`, 'done');
       showToast('✅ Imagen subida');
+      refreshImgList();
     } else {
       throw new Error(data.error?.message || 'Error desconocido');
     }
   } catch (err) {
     setUploadStatus(`✗ Error: ${err.message}`, 'error');
     showToast('❌ Error al subir imagen');
-    STATE.uploadedImgUrl = null;
   }
 }
 
@@ -2064,7 +2299,8 @@ async function saveProduct() {
     price:       isNaN(price) ? null : price,
     isNew:       STATE.tagNew,
     isOffer:     STATE.tagOffer,
-    imageUrl:    STATE.uploadedImgUrl || null,
+    images:      STATE.uploadedImages,
+    imageUrl:    STATE.uploadedImages[0] || null,  // backward compat
     updatedAt:   serverTimestamp(),
   };
 
@@ -2154,7 +2390,7 @@ document.getElementById('shareFbBtn').addEventListener('click', () => {
 document.getElementById('shareCopyBtn').addEventListener('click', () => {
   navigator.clipboard?.writeText(window.location.href)
     .then(() => showToast('🔗 Enlace copiado'))
-    .catch(() => showToast('❌ No se pudo copiar'));
+    .catch(() => showToast('No se pudo copiar'));
 });
 
 // ============================================================
@@ -2187,37 +2423,44 @@ document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
   if (document.getElementById('confirm-overlay').classList.contains('open')) { closeConfirm(); return; }
   if (document.getElementById('modal-overlay').classList.contains('open'))   { closeModal();   return; }
+  // close lightbox if open
+  const lb = document.querySelector('.lightbox-overlay');
+  if (lb) document.body.removeChild(lb);
 });
 
 // ============================================================
-// SEED SAMPLE PRODUCTS (only if DB is empty)
+// SEED SAMPLE PRODUCTS
 // ============================================================
 async function seedSampleData() {
   if (!firebaseReady) return;
   try {
     const snap = await getDocs(collection(db, 'products'));
-    if (snap.docs.length >= SAMPLE_PRODUCTS.length) return; // already seeded
+    if (snap.docs.length >= SAMPLE_PRODUCTS.length) return;
 
     const existingNames = new Set(snap.docs.map(d => d.data().name));
     for (const p of SAMPLE_PRODUCTS) {
       if (!existingNames.has(p.name)) {
-        await addDoc(collection(db, 'products'), { ...p, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+        await addDoc(collection(db, 'products'), {
+          ...p,
+          imageUrl:  p.images?.[0] || null,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
       }
     }
   } catch (e) {
-    // silent — not critical
+    // silent
   }
 }
 
 // ============================================================
-// SEED DEFAULT CATEGORIES (only if empty)
+// SEED DEFAULT CATEGORIES
 // ============================================================
 async function seedDefaultCategories() {
   if (!firebaseReady) return;
   try {
     const snap = await getDocs(collection(db, 'categories'));
     if (!snap.empty) return;
-
     for (const cat of DEFAULT_CATEGORIES) {
       await addDoc(collection(db, 'categories'), { ...cat, createdAt: serverTimestamp() });
     }
@@ -2241,7 +2484,6 @@ function startListening() {
     return;
   }
 
-  // Listen to categories
   onSnapshot(
     query(collection(db, 'categories'), orderBy('createdAt', 'asc')),
     snap => {
@@ -2251,7 +2493,6 @@ function startListening() {
     err => console.warn('Categories listener error:', err.message)
   );
 
-  // Listen to products
   const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
   onSnapshot(q, snap => {
     STATE.products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -2272,7 +2513,6 @@ function startListening() {
 // ============================================================
 loadTheme();
 
-// Seed data then start listeners
 if (firebaseReady) {
   seedDefaultCategories().then(() => seedSampleData()).then(() => startListening());
 } else {
@@ -2282,3 +2522,4 @@ if (firebaseReady) {
 </script>
 </body>
 </html>
+
